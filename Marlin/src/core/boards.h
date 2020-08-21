@@ -107,6 +107,7 @@
 #define BOARD_COPYMASTER_3D           1151  // Copymaster 3D
 #define BOARD_ORTUR_4                 1152  // Ortur 4
 #define BOARD_TENLOG_D3_HERO          1153  // Tenlog D3 Hero IDEX printer
+#define BOARD_K8800                   1199  // Velleman Vertex Delta K8800
 
 //
 // RAMBo and derivatives

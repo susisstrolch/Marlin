@@ -68,20 +68,23 @@
 //
 // Temperature Sensors
 //
-#define TEMP_0_PIN                            13
+#define TEMP_0_PIN         13
+#define TEMP_BED_PIN        8 //PK0
 
 //
 // Heaters / Fans
 //
-#define HEATER_0_PIN                          10
-#define FAN_PIN                                8
-#define CONTROLLER_FAN_PIN                     9
+#define HEATER_0_PIN       10	//EXTRUDER 1
+//#define HEATER_BED_PIN     31	//PC6 - @riodoro1
+#define HEATER_BED_PIN     36	//PC1
+
+#define FAN_PIN             8	//FILAMENT FAN
+#define FAN1_PIN            9	//CONTROLLER FAN
 
 //
 // Misc. Functions
 //
 #define SDSS                                  25
-
 #define FIL_RUNOUT_PIN                        69  // PK7
 #define KILL_PIN                              20  // PD1
 
@@ -107,3 +110,8 @@
   #define BTN_EN2                             16
   #define BTN_ENC                             23
 #endif
+
+#define LCD_CONTRAST_MIN			  0
+#define LCD_CONTRAST_MAX			100
+#define LCD_CONTRAST_INIT     			 40
+

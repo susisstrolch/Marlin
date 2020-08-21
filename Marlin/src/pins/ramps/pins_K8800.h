@@ -73,15 +73,15 @@
 //
 // Heaters / Fans
 //
-#define HEATER_0_PIN                          10
-#define FAN_PIN                                8
-#define CONTROLLER_FAN_PIN                     9
+#define HEATER_0_PIN                          10	//EXTRUDER 1
+
+#define FAN_PIN                                8	//FILAMENT FAN
+#define FAN1_PIN                               9	//CONTROLLER FAN
 
 //
 // Misc. Functions
 //
 #define SDSS                                  25
-
 #define FIL_RUNOUT_PIN                        69  // PK7
 #define KILL_PIN                              20  // PD1
 
@@ -107,3 +107,8 @@
   #define BTN_EN2                             16
   #define BTN_ENC                             23
 #endif
+
+// LCD and encoder settings (Conditional_LCD.h)
+#define LCD_CONTRAST_MIN                     128
+#define LCD_CONTRAST_MAX                     255
+#define LCD_CONTRAST_INIT                    180

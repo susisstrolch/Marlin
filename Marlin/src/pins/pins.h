@@ -740,7 +740,7 @@
   #elif MB(RUMBA32_AUS3D)
     #error "BOARD_RUMBA32_AUS3D is now BOARD_RUMBA32_V1_0. Please update your configuration."
   #else
-    #error "Unknown MOTHERBOARD value set in Configuration.h"
+    #pragma GCC error "Unknown MOTHERBOARD value set in Configuration.h"
   #endif
 
   #undef BOARD_MKS_13

@@ -1,0 +1,25 @@
+#
+# Marlin Firmware
+# PlatformIO Configuration File
+#
+# For detailed documentation with EXAMPLES:
+#
+# https://docs.platformio.org/en/latest/projectconf.html
+#
+
+# Automatic targets - enable auto-uploading
+#targets = upload
+
+[platformio]
+default_envs = K8800
+
+#
+# Velleman K8800
+#
+[env:K8800]
+platform          = atmelavr
+board             = megaatmega2560
+board_upload.maximum_size = 245759
+monitor_speed     = 500000
+monitor_port      = /dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0
+upload_port       = /dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0

@@ -120,3 +120,9 @@
   #endif
 
 #endif // HAS_WIRED_LCD
+
+// LCD and encoder settings (Conditional_LCD.h)
+#define LCD_CONTRAST_MIN                     128
+#define LCD_CONTRAST_MAX                     255
+#define LCD_CONTRAST_INIT                    180
+

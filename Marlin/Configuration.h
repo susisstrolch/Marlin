@@ -43,11 +43,11 @@
   // 3 ... heated bed, variant @susisstrolch (PC1, PK0, sandwich 220mm)
   #define VELLEMAN_K8800_BED 3
 
-#if VELLEMAN_K8800_BED > 0
+  #if VELLEMAN_K8800_BED > 0
     // heated bed pin configuration
     #define HEATER_BED_PIN 36   // @shelxle: 36, @riodoro: 31
     #define TEMP_BED_PIN    8
-    #define HEATED_BED_SENSOR 5
+    #define TEMP_SENSOR_BED 5
   #endif
 #endif
 
@@ -448,7 +448,7 @@
  *   999 : Dummy Table that ALWAYS reads 100°C or the temperature defined below.
  */
 #if !defined(TEMP_SENSOR_0)
-  #define TEMP_SENSOR_0 7       /default: stock Velleman hotend
+  #define TEMP_SENSOR_0 7       //default: stock Velleman hotend
 #endif
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
@@ -888,9 +888,6 @@
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 // variables to calculate steps
-#if ENABLED(VELLEMAN_K8800_STOCK)
-  #define DEFAULT_AXIS_STEPS_PER_UNIT   { 116.360, 116.360, 116.360, 148.700 }  // default steps per unit for Kossel (GT2, 20 tooth)
-#else
   #define XYZ_FULL_STEPS_PER_ROTATION 200
   #define XYZ_MICROSTEPS 32
   #define XYZ_BELT_PITCH 2.5
@@ -898,7 +895,10 @@
 
   // delta speeds must be the same on xyz
   #define DEFAULT_XYZ_STEPS_PER_UNIT ((XYZ_FULL_STEPS_PER_ROTATION) * (XYZ_MICROSTEPS) / double(XYZ_BELT_PITCH) / double(XYZ_PULLEY_TEETH))
+#if ENABLED(VELLEMAN_K8800_STOCK)
   #define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT,  154.3 }  // default steps per unit for Kossel (GT2, 20 tooth)
+#else
+  #define DEFAULT_AXIS_STEPS_PER_UNIT   { 116.360, 116.360, 116.360, 148.700 }  // default steps per unit for Kossel (GT2, 20 tooth)
 #endif
 
 /**

@@ -26,14 +26,16 @@
 // set to true to use settings from Velleman K8800 Marlin 1.1.4
 #define VELLEMAN_K8800_STOCK false
 
+#define MAX_STEPRATE 45000	  // max. Steps/s for AVR boards (see reprap)
+
 #if ENABLED(VELLEMAN_K8800_STOCK)
     #define E3D_HOTEND false
     #define VELLEMAN_K8800_BED 0
-    #define ESTEPSpMM 154.3     // E-Steps/mm
+    #define ESTEPS_P_MM 154.3     // stock E-Steps/mm
 #else // tweaked K8800
   #define E3D_HOTEND true
-  //#define ESTEPSpMM 148.7     // E-Steps/mm
-  #define ESTEPSpMM   812.0     // BMC Dual Drive extruder (830)
+  #define ESTEPS_P_MM   812.0     // BMC Dual Drive extruder (830)
+  #define HAYDN_MAGARMS 288.13	  // Haydn Huntley MagBalls and Arms
 
   #if ENABLED(E3D_HOTEND)
     #define TEMP_SENSOR_0  5    // E3D V6 hotend
@@ -688,7 +690,11 @@
   // Make delta curves from many straight lines (linear interpolation).
   // This is a trade-off between visible corners (not enough segments)
   // and processor overload (too many expensive sqrt calls).
-  #define DELTA_SEGMENTS_PER_SECOND 60
+  #if ENABLED(VELLEMAN_K8800_STOCK)
+    #define DELTA_SEGMENTS_PER_SECOND 60
+  #else
+    #define DELTA_SEGMENTS_PER_SECOND 100
+  #endif
 
   // After homing move down to a height where XY movement is unconstrained
   #define DELTA_HOME_TO_SAFE_ZONE
@@ -714,7 +720,11 @@
 
   #if EITHER(DELTA_AUTO_CALIBRATION, DELTA_CALIBRATION_MENU)
     // Set the steprate for papertest probing
-    #define PROBE_MANUALLY_STEP 0.05      // (mm)
+    #if ENABLED(VELLEMAN_K8800_STOCK)
+      #define PROBE_MANUALLY_STEP 0.05      // (mm)
+    #else
+      #define PROBE_MANUALLY_STEP (2 * 0.0086)    // max. resolution is 0.0086mm
+    #endif
   #endif
 
   // Print surface diameter/2 minus unreachable space (avoid collisions with vertical towers).
@@ -733,10 +743,15 @@
   // Center-to-center distance of the holes in the diagonal push rods.
   #define DELTA_DIAGONAL_ROD 207.0    // (mm)
   // Distance between bed and nozzle Z home position
-  #define DELTA_HEIGHT 308.00             // (mm) Get this value from G33 auto calibrate
+  #define DELTA_HEIGHT 308.00         // (mm) Get this value from G33 auto calibrate
 #else
-  #define DELTA_DIAGONAL_ROD 210.0    // (mm)
-  #define DELTA_HEIGHT 298.00             // (mm) Get this value from G33 auto calibrate
+  #if ENABLED(HAYDN_MAGARMS)
+    #define DELTA_DIAGONAL_ROD 218.13   // (mm) SusisStrolc rod set
+    #define DELTA_HEIGHT (298.00 - 11.0)   // (mm) Get this value from G33 auto calibrate
+  #else
+    #define DELTA_DIAGONAL_ROD 210.0    // (mm)
+    #define DELTA_HEIGHT 298.00         // (mm) Get this value from G33 auto calibrate
+  #endif
 #endif
 
   #define DELTA_ENDSTOP_ADJ { 0.0, 0.0, 0.0 } // Get these values from G33 auto calibrate
@@ -898,7 +913,7 @@
 
   // delta speeds must be the same on xyz
   #define DEFAULT_XYZ_STEPS_PER_UNIT ((XYZ_FULL_STEPS_PER_ROTATION) * (XYZ_MICROSTEPS) / double(XYZ_BELT_PITCH) / double(XYZ_PULLEY_TEETH))
-  #define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, ESTEPSpMM }  // default steps per unit for Kossel (GT2, 20 tooth)
+  #define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, ESTEPS_P_MM }  // default steps per unit for Kossel (GT2, 20 tooth)
 
 /**
  * Default Max Feed Rate (mm/s)

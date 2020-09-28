@@ -739,20 +739,28 @@
   // Horizontal offset of the universal joints on the carriages.
   #define DELTA_CARRIAGE_OFFSET 23.777 // mm
 
-#if ENABLED(VELLEMAN_K8800_STOCK)
   // Center-to-center distance of the holes in the diagonal push rods.
-  #define DELTA_DIAGONAL_ROD 207.0    // (mm)
+  #define STOCK_K8800_DIAGONAL_ROD	207.0 // (mm)
   // Distance between bed and nozzle Z home position
-  #define DELTA_HEIGHT 308.00         // (mm) Get this value from G33 auto calibrate
-#else
-  #if ENABLED(HAYDN_MAGARMS)
-    #define DELTA_DIAGONAL_ROD 218.13   // (mm) SusisStrolc rod set
-    #define DELTA_HEIGHT (298.00 - 11.0)   // (mm) Get this value from G33 auto calibrate
+  #define STOCK_K8800_DELTAHEIGHT	308.0 // (mm) Get this value from G33 auto calibrate
+
+  #if ENABLED(VELLEMAN_K8800_STOCK)
+    #define DELTA_DIAGONAL_ROD (STOCK_K8800_DIAGONAL_ROD)
+    #define DELTA_HEIGHT (STOCK_K8800_DELTAHEIGHT)
   #else
-    #define DELTA_DIAGONAL_ROD 210.0    // (mm)
-    #define DELTA_HEIGHT 298.00         // (mm) Get this value from G33 auto calibrate
+    #if defined(HAYDN_MAGARMS)
+      #define DELTA_DIAGONAL_ROD 288.13   	// (mm) Haydn Huntley MagArms
+      #define DELTA_HEIGHT (STOCK_K8800_DELTAHEIGHT - DELTA_DIAGONAL_ROD + STOCK_K8800_DIAGONAL_ROD - 10.0)
+    #else
+      #if (VELLEMAN_K8800_BED) == 3
+        #define DELTA_DIAGONAL_ROD (STOCK_K8800_DIAGONAL_ROD + 3.0)
+        #define DELTA_HEIGHT (STOCK_K8800_DELTAHEIGHT - 10.0)	// height of heated bed
+      #else 
+        #define DELTA_DIAGONAL_ROD (STOCK_K8800_DIAGONAL_ROD)
+        #define DELTA_HEIGHT (STOCK_K8800_DELTAHEIGHT - 0)	// height of heated bed
+      #endif
+    #endif
   #endif
-#endif
 
   #define DELTA_ENDSTOP_ADJ { 0.0, 0.0, 0.0 } // Get these values from G33 auto calibrate
 
@@ -920,11 +928,13 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 500, 25 }
+#define _MXYZFR	(MAX_STEPRATE / DEFAULT_XYZ_STEPS_PER_UNIT)
+#define _MEFR	(MAX_STEPRATE / (ESTEPS_P_MM))
+#define DEFAULT_MAX_FEEDRATE  {_MXYZFR , _MXYZFR, _MXYZFR, _MEFR }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
-  #define MAX_FEEDRATE_EDIT_VALUES    { 600, 600, 600, 50 } // ...or, set your own edit limits
+  #define MAX_FEEDRATE_EDIT_VALUES    { 1.5 * (_MXYZFR), 1.5 * (_MXYZF),1.5 * (_MXYZFR), 1.5 * (_MEFR) } // ...or, set your own edit limits
 #endif
 
 /**
@@ -1203,11 +1213,7 @@
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
   #if ENABLED(VELLEMAN_K8800_STOCK)
     #define PROBING_MARGIN ( DELTA_RADIUS / 2)
-  #elif VELLEMAN_K8800_BED == 3
-    // printbed has 220mm diameter, so we don't need the margin
-    #define PROBING_MARGIN  5
   #else
-    #pragma GCC warning "setting PROBING_MARGIN to 15mm"
     #define PROBING_MARGIN 15
   #endif
 
@@ -1215,7 +1221,7 @@
 #if ENABLED(VELLEMAN_K8800_STOCK)
   #define XY_PROBE_SPEED (66.67 * 60)
 #else
-  #define XY_PROBE_SPEED (32 * 60)
+  #define XY_PROBE_SPEED (48 * 60)
 #endif
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)

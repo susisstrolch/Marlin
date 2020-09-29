@@ -26,7 +26,7 @@
 // set to true to use settings from Velleman K8800 Marlin 1.1.4
 #define VELLEMAN_K8800_STOCK false
 
-#define MAX_STEPRATE 45000	  // max. Steps/s for AVR boards (see reprap)
+#define MAX_STEPRATE 40000	  // max. Steps/s for AVR boards (see reprap)
 
 #if ENABLED(VELLEMAN_K8800_STOCK)
     #define E3D_HOTEND false
@@ -168,7 +168,11 @@
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "Vertex Delta"
+#if ENABLED(VELLEMAN_K8800_STOCK)
+  #define CUSTOM_MACHINE_NAME "Vertex Delta"
+#else
+  #define CUSTOM_MACHINE_NAME "Vertex Delta [mod]"
+#endif
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -1033,7 +1037,7 @@
  * The probe replaces the Z-MIN endstop and is used for Z homing.
  * (Automatically enables USE_PROBE_FOR_Z_HOMING.)
  */
-#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
+// #define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 
 // Force the use of the probe for Z-axis homing
 //#define USE_PROBE_FOR_Z_HOMING

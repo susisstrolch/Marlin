@@ -109,9 +109,9 @@
   #define LCD_PINS_D6                         33
   #define LCD_PINS_D7                         31
 
-  #define LCD_CONTRAST_MIN                     0
-  #define LCD_CONTRAST_MAX                   100
-  #define DEFAULT_LCD_CONTRAST                30
+  #define LCD_CONTRAST_MIN                   128
+  #define LCD_CONTRAST_MAX                   255
+  #define LCD_CONTRAST_INIT                  180
 
   #if ENABLED(NEWPANEL)
     #define BTN_EN1                           17
@@ -120,9 +120,3 @@
   #endif
 
 #endif // HAS_WIRED_LCD
-
-// LCD and encoder settings (Conditional_LCD.h)
-#define LCD_CONTRAST_MIN                     128
-#define LCD_CONTRAST_MAX                     255
-#define LCD_CONTRAST_INIT                    180
-

@@ -1026,7 +1026,7 @@
 #if ENABLED(VELLEMAN_K8800_STOCK)
   //#define S_CURVE_ACCELERATION
 #else
-  #define S_CURVE_ACCELERATION
+  //#define S_CURVE_ACCELERATION
 #endif
 
 //===========================================================================
@@ -1411,11 +1411,7 @@
 #endif
 
 #if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
-  #if ENABLED(VELLEMAN_K8800_STOCK)
-    //#define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
-  #else
-    #define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
-  #endif
+  //#define SOFT_ENDSTOPS_MENU_ITEM  // Enable/Disable software endstops from the LCD
 #endif
 
 /**
@@ -1657,7 +1653,7 @@
 // - Move the Z probe (or nozzle) to a defined XY point before Z Homing.
 // - Prevent Z homing when the Z probe is outside bed area.
 //
-#define Z_SAFE_HOMING
+//#define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT X_CENTER  // X point for Z homing
@@ -1668,7 +1664,7 @@
 #if ENABLED(VELLEMAN_K8800_STOCK)
   #define HOMING_FEEDRATE_Z  (100*60)
 #else
-  #define HOMING_FEEDRATE_Z  (100*60)
+  #define HOMING_FEEDRATE_Z  (120*60)
 #endif
 
 // Validate that endstops are triggered on homing moves

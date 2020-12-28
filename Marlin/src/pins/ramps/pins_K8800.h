@@ -110,8 +110,8 @@
   #define LCD_PINS_D7                         31
 
   #define LCD_CONTRAST_MIN                     0
-  #define LCD_CONTRAST_MAX                   100
-  #define DEFAULT_LCD_CONTRAST                30
+  #define LCD_CONTRAST_MAX                   255
+  #define DEFAULT_LCD_CONTRAST               180
 
   #if IS_NEWPANEL
     #define BTN_EN1                           17
